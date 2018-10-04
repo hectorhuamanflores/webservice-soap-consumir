@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8"/>
+<title>Servicios</title>
+<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+<link rel="stylesheet" th:href="@{/css/jquery-ui.min.css}" />
+<link rel="stylesheet" th:href="@{/css/main.css}" />
+</head>
+<body>
+   <div class="container">
+     <h1 th:text="${titulo}"></h1>
+<!--      <button id="xmlCambiar">cambiar</button><br><br> -->
+<!--      <textarea class="formXML" rows="20" cols="80"></textarea> -->
+<!--      <div class="form"> -->
+<!--      </div> -->
+     
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th scope="col">Required</th>
+      <th scope="col">Response</th>
+      <th scope="col">Resultado</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+ <div style="width:500px; overflow-x: auto;">
+<xmp><soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:gs="http://spring.io/guides/gs-producing-web-service">
+   <soapenv:Header/>
+      <soapenv:Body>
+      <gs:getCountryRequest>
+         <gs:name th:text="${pais}"></gs:name>
+      </gs:getCountryRequest>
+   </soapenv:Body>
+</soapenv:Envelope></xmp>
+</div>
+      </td>
+      <td>
+        <div th:if="${validar}" style="width:500px; overflow-x: auto;">
+<xmp><SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
+   <SOAP-ENV:Header/>
+   <SOAP-ENV:Body>
+      <ns2:getCountryResponse xmlns:ns2="http://spring.io/guides/gs-producing-web-service">
+         <ns2:country>
+            <ns2:name th:text="${ResponseName}"></ns2:name>
+            <ns2:population th:text="${ResponsePopulation}">46704314</ns2:population>
+            <ns2:capital th:text="${ResponseCapital}">Lima</ns2:capital>
+            <ns2:currency th:text="${ResponseMoneda}">SOLES</ns2:currency>
+         </ns2:country>
+      </ns2:getCountryResponse>
+   </SOAP-ENV:Body>
+</SOAP-ENV:Envelope></xmp>
+        </div>
+        <div th:unless="${validar}" style="width:500px; overflow-x: auto;">
+<xmp><ns2:country>
+    <ns2:error>Pais incorrecto</ns2:error>
+</ns2:country></xmp>
+        </div>
+      </td>
+      <td>
+         <div th:if="${validar}"> OK</div>
+         <div th:unless="${validar}"> ERROR</div>
+      </td>
+    </tr>
+  </tbody>
+</table>
+     
+     
+     
+   </div>
+   
+   <script th:src="@{/js/jquery-3.2.1.min.js}"></script>
+   <script th:src="@{/js/popper.min.js}"></script>
+   <script th:src="@{/js/bootstrap.min.js}"></script>
+   <script th:src="@{/js/hector.js}"></script>
+</body>
+</html>
